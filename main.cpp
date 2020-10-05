@@ -3,7 +3,7 @@ using namespace std;
 
 int main(){
    
-    brilhart_morrison(17873,15);
+    brilhart_morrison(17873,12);
     cout<<"---------------------------------------------------------------------"<<endl;
     brilhart_morrison(25511,10);
     // auto a=factorize(17873);

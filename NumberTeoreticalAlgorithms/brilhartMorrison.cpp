@@ -37,16 +37,22 @@ long brilhart_morrison(long n,size_t iterations=5){
     long b[iterations+1];
     b[0]=1;
     b[1]=a[0];
-    for(int k=1;k<iterations;k++){
+    for(size_t k=1;k<iterations;k++){
         b[k+1]=a[k]*b[k]+b[k-1];
+        
     }
+    for (size_t i = 0; i <= iterations; i++)
+    {
+        cout<<"b_"<<i<<" = "<<b[i]<<endl;
+    }
+    
     long m[iterations+1];
     for(size_t k=0;k<=iterations;k++){
         m[k]=(b[k]*b[k])%n;
         if(m[k]>abs(m[k]-n)){
             m[k]=(m[k]-n);
         }
-        //cout<<k<<" "<<m[k]<<endl;
+        cout<<"m_"<<k-1<<" = "<<m[k]<<endl;
     }
     //filling the factorBase and m_factorized
     set<long> factorBase;
@@ -87,7 +93,13 @@ long brilhart_morrison(long n,size_t iterations=5){
     }
     cout<<"}"<<endl;
     for (size_t i = 0; i <= iterations; i++){
-        cout<<"m_"<<i<<" = ";
+        if(i==0){
+            cout<<"(m_"<<"-1"<<")^2 mod(n) = ";
+        }else
+        {
+            cout<<"(m_"<<i-1<<")^2 mod(n) = ";
+        }
+        
         printf("%3ld = ",m[i]);
         for(auto it=m_factorized[i].begin();it!=m_factorized[i].end();++it){
             cout<<it->first<<"^"<<it->second<<" * ";
@@ -158,8 +170,9 @@ long brilhart_morrison(long n,size_t iterations=5){
         //counting X,Y
         long X=1;
         long Y=1;
+        long t;
         for(size_t i=0;i<iterations;i++){
-            if(x[i]){
+            if(x[i]==1){
                 X*=b[i+1];
                 X%=n;
                 Y*=b[i+1]*b[i+1];
@@ -169,7 +182,7 @@ long brilhart_morrison(long n,size_t iterations=5){
         Y=sqrt(Y);
         cout<<"     X = "<<X<<endl;
         cout<<"     Y = "<<Y<<endl;
-        cout<<"     gcd(X-Y,n) = "<<gcd_not_verbose(X-Y,n)<<endl;
-        cout<<"     gcd(X+Y,n) = "<<gcd_not_verbose(X+Y,n)<<endl;
+        cout<<"     gcd(X-Y,n) = "<<gcd_not_verbose(abs(X-Y),n)<<endl;
+        cout<<"     gcd(X+Y,n) = "<<gcd_not_verbose(abs(X+Y),n)<<endl;
     }
 }   
