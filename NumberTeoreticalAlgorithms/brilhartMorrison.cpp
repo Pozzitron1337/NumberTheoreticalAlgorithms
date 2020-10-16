@@ -175,7 +175,7 @@ long brilhart_morrison(long n,size_t iterations=5){
             if(x[i]==1){
                 X*=b[i+1];
                 X%=n;
-                Y*=b[i+1]*b[i+1];
+                Y*=(b[i+1]*b[i+1])%n;
                 Y%=n;
             }   
         }
