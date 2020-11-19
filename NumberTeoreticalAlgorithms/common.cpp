@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <cmath>
+#include <bitset>
 #include "numberAlgorithms.h"
 
 using namespace std;
@@ -39,6 +40,36 @@ long gcd_not_verbose (long a, long b) {
     return a+b;
 }
 
+long mod_inverse(long element, long mod){
+        if(gcd_not_verbose(element,mod)!=1){
+            return 0;
+        }
+        long a=element;
+        long b=mod;
+        long r=0;
+        long p=1;
+        long x;
+        while (a!=0 && b!=0) {
+            if (a>=b) {
+                a -= b;
+                p -= r;
+            } else {
+                b -= a;
+                r -= p;
+            }
+        }
+        if (a!=0) {
+            x = p;
+
+        }else {
+            x = r;
+        }
+        if(x<0){
+            x+=mod;
+        }
+        return x;//x=element^(-1) (mod p)
+}
+
 long get_hight_bit(long x){
     //if input is 0b11010101,the return is 0b10000000
     long t = 1;
@@ -65,6 +96,7 @@ long f_4(long x,long y,long n){
     return x*x-y*y-n;
 }
 
+//prime->ammount of primes
 map<long, long> factorize(long n){
     map<long, long> factors;
 
@@ -80,4 +112,28 @@ map<long, long> factorize(long n){
     }
 
     return factors;
+}
+
+long pow(long a,long exp){
+    long y=1;
+    long exp_len=log2(get_hight_bit(exp));
+    for (long i = exp_len; i >-1; i--){
+        y=y*y;
+        if((exp>>i)&0x1){
+            y=(y*a);
+        }
+    }
+    return y;
+}
+
+long modPow(long a,long exp,long mod){
+    long y=1;
+    long exp_len=log2(get_hight_bit(exp));
+    for (long i = exp_len; i >-1; i--){
+        y=(y*y)%mod;
+        if((exp>>i)&0x1){
+            y=(y*a)%mod;
+        }
+    }
+    return y;    
 }

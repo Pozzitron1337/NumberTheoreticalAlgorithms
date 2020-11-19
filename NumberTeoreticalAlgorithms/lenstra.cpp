@@ -2,6 +2,7 @@
 class ElipticCurve
 {
 private:
+//y^2=x^3+ax+b
     long a;
     long b;
     long n;
@@ -153,9 +154,11 @@ void task_3_lenstra(long n){
     long f=8*7*6*5*4*3*2;
     //3P=P+P+P
     auto R=P+P;
-    for (size_t i = 1; i <= f-1; i++)
+    for (size_t i = 2; i <= f; i++)
     {
+        cout<<i<<endl;
         R=R+P;
+        
     }
     R.printPoint();
     delete curve;
